@@ -1,8 +1,7 @@
-const lights = document.querySelectorAll('.light');
-const timeDisplay = document.querySelector('#time');
-const start = document.querySelector('#start');
-const result = document.querySelector('#display-time');
-const pageReload = document.querySelector('#reload');
+const lights = document.querySelectorAll('.f1-timer-light');
+const start = document.querySelector('#f1-timer-start');
+const result = document.querySelector('#f1-timer-display-time');
+const pageReload = document.querySelector('#f1-timer-reload');
 let current = 0;
 let startTime;
 let endTime;
@@ -19,9 +18,6 @@ function refreshPage() {
   window.location.reload();
 }
 
-// Temporarily moved inside startProcedure function
-// start.addEventListener('mousedown', getReactionTime);
-
 // Get a random number between two numbers
 function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
@@ -30,39 +26,31 @@ function getRandomNumber(min, max) {
 
 function startProcedure() {
   document.removeEventListener('click', startProcedure);
-  // startTime = Date.now();
   potato = setInterval(turnLightsOn, 1000);
 }
 
 function turnLightsOn() {
   
-  lights[current].classList.replace('off', 'on');
+  lights[current].classList.replace('f1-timer-off', 'f1-timer-on');
   current += 1; 
   if (current === lights.length) {
-    // endTime = Date.now();
     clearInterval(potato);
-    // let timeElapsed = (endTime - startTime) / 1000;
-    // timeDisplay.textContent = timeElapsed;
 
     let delay = getRandomNumber(4, 7);
     delay = Math.floor(delay * 1000);
-    console.log(delay);
 
     lightsOff = setTimeout(turnLightsOff, delay);
     
     start.addEventListener('mousedown', getReactionTime);
   }
-  console.log(current);
 }
 
 function turnLightsOff() {
   time0 = performance.now();
   lights.forEach(light => {
-    light.classList.replace('on', 'off');
+    light.classList.replace('f1-timer-on', 'f1-timer-off');
   })
   time1 = performance.now();
-
-  // console.log(`It took ${time1 - time0} milliseconds to run the forEach function.`);
 }
 
 function getReactionTime() {
@@ -77,5 +65,5 @@ function getReactionTime() {
     start.removeEventListener('mousedown', getReactionTime);
   }
 
-  pageReload.classList.replace('invisible', 'visible');
+  pageReload.classList.replace('f1-timer-invisible', 'f1-timer-visible');
 }
